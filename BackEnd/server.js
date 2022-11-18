@@ -19,6 +19,7 @@ app.use(function (req, res, next) {
   next();
 });
 
+//Using mongoose
 const mongoose = require('mongoose');
 
 main().catch(err => console.log(err));
@@ -27,12 +28,14 @@ async function main() {
   await mongoose.connect('mongodb+srv://admin:admin@cluster0.q42plqc.mongodb.net/?retryWrites=true&w=majority');
 }
 
+//Representation of a book object
 const bookSchema = new mongoose.Schema({
   title: String,
   cover: String,
   author: String
 });
 
+//Instance of book 
 const bookModel = mongoose.model('Books', bookSchema);
 
 app.get('/', (req, res) => {
@@ -41,6 +44,7 @@ app.get('/', (req, res) => {
 
 app.post('/api/books', (req, res) => {
   console.log(req.body);
+  //Adds book to database
   bookModel.create({
     title: req.body.title,
     cover: req.body.cover,
@@ -50,9 +54,9 @@ app.post('/api/books', (req, res) => {
 })
 
 app.get('/api/books', (req, res) => {
-  bookModel.find((error, data)=>{
+  //retrive book data
+  bookModel.find((error, data) => {
     res.json(data);
-    //comment
   })
 })
 
