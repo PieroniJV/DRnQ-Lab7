@@ -60,6 +60,15 @@ app.get('/api/books', (req, res) => {
   })
 })
 
+//retrieving book by id from database
+app.get('/api/books/:id', (req, res) => {
+  console.log(req.params.id);
+
+  bookModel.findById(req.params.id, (error, data)=>{
+    res.json(data);
+  })
+})
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
